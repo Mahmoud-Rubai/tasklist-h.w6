@@ -10,7 +10,7 @@
     <h1>Hello!! my name is {{$name}}</h1>
 
 
-<form action="send" method="post">
+<form action="store" method="post">
     @csrf
 
     <input type="text" name="myname" id="myname">
