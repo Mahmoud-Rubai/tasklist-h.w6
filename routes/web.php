@@ -22,6 +22,7 @@ Route::post('store', function (Request $request) {
     return view('about', compact('name'));
 });
 
+//**************** */
 
 Route::get('tasks', function () {
     $tasks = [
