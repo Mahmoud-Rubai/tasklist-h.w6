@@ -50,6 +50,8 @@ Route::get('show/{id}', function ($id) {
 Route::get('tasks',function(){
 
     $tasks= DB::table('tasks')->get();
+    //dd($task);
+
 
     return view('tasks',compact('tasks'));
 });
@@ -58,6 +60,7 @@ Route::get('tasks/show/{id}' , function($id){
 
     $task= DB::table('tasks')->find($id);
     //dd($task);
+
     return view('show',compact('task'));
 
 });
