@@ -7,9 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    <u1>
-    @foreach ($tasks as $task)
-    <li><a href="tasks/show/{id}">{{$task->title}}</a><li>
-  @foreach
+   @yield('content')
 </body>
 </html>
