@@ -1,39 +1,79 @@
-?php
+<?php
+
+
+//use GuzzleHttp\Psr7\Request;
+use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-
 
 Route::get('/', function () {
     return view('welcome');
 });
-Rout::get('task', function(){
-    $tasks = DB::table('tasks')->get();
-    //dd($tasks);
-    return view('tasks');
+
+Route::get('about', function () {
+    $name = "Jamal Alawadi";
+    return view('about', compact('name'));
 });
-Route::get('tasks/show/{id}', function($id){
-    $task = DB::table('tasks')->where('id',$id)->find($id);
-    dd($task);
-    return view('show', compact('task'));
+
+
+Route::post('store', function (Request $request) {
+    $name = $request->myname;
+    return view('about', compact('name'));
 });
-Route::get('app', function(){
-    $tasks = DB::table('tasks')->get();
+
+Route::get('tasks',function(){
+
+    $tasks= DB::table('tasks')->get();
+
+    return view('tasks',compact('tasks'));
+});
+
+Route::get('tasks/show/{id}' , function($id){
+
+    $task= DB::table('tasks')->find($id);
+    //dd($task);
+    return view('show',compact('task'));
+
+});
+
+Route::get('todo', function () {
+
+    // $tasks =DB::table('tasks')->get();
+    $tasks= Task::all();
+
+
     return view('todo', compact('tasks'));
 });
-Rout::post('store', function(Request $request){
-    DB::table('tasks')->insert([
-     'title' => $request->title
-    ]);
+
+Route::post('store',function(Request $request){
+
+    // DB::table('tasks')->insert([
+    //     'title'=> $request-> title
+    // ]);
+
+    $task = new Task;
+    $task-> title = $request-> title;
+    $task -> save();
+
+    return redirect()-> back();
+
+  //  ******************************
+
+});
+Route::post('del/{id}', function (Request $d) {
+    $tasks = DB::table('tasks')->get();
+    $ti = 0;
+    foreach ($tasks as $t => $task) {
+        $ti = $task->title;
+    }
+    DB::table('tasks')->where('title', '=', $ti)->delete();
+    // $tit = $d->tit;
+    // DB::table('tasks')->where('title', $tit)->delete();
     return redirect()->back();
 });
+
+
+
